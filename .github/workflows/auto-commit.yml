@@ -1,0 +1,23 @@
+name: Auto Commit
+
+on:
+    schedule:
+        - cron: '0 18 * * *'
+
+jobs:
+    commit:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Configure git
+              run: |
+                git config user.name "Muhammetcansimsek"
+                git config user.email "simsek-1999@hotmail.com"
+
+            - name: Commit and push changes
+              run: |
+                git add .
+                git commit -m "updated: $(date + '%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+                git push
